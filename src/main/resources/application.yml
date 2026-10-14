@@ -1,14 +1,36 @@
 spring:
   application:
-    name: ai-patterns-handbook
+    name: spring-ai-app
+
+  # No compose.yaml yet; flip to true once one exists for ChromaDB (RAG examples)
+  docker:
+    compose:
+      enabled: false
 
   ai:
+    # Chat: all providers stay active (ChatClients are built in ModelConfig).
+    # Embedding: only one may be active, since the Chroma vector store needs a single EmbeddingModel.
+    model:
+      embedding: ollama
+
+    # ---------- ChromaDB (vector store) ----------
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        initialize-schema: true   # create the collection on startup if missing
+        # Spring AI's default tenant/database don't exist on the Chroma 1.x server and the client
+        # fails to create them, so use the ones Chroma ships with.
+        tenant-name: default_tenant
+        database-name: default_database
+
     # ---------- Ollama (local, default provider) ----------
     ollama:
       base-url: http://localhost:11434
       chat:
         options:
-          model: llama3.2
+          model: gemma2:2b
           temperature: 0.7
       init:
         pull-model-strategy: when_missing
