@@ -47,18 +47,11 @@
             <artifactId>spring-ai-starter-model-huggingface</artifactId>
         </dependency>
 
-        <!-- Vector store for upcoming RAG examples -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-vector-store-chroma</artifactId>
         </dependency>
 
-        <!-- Auto-start ChromaDB via Docker Compose (RAG examples) -->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-spring-boot-docker-compose</artifactId>
-            <optional>true</optional>
-        </dependency>
 
         <!-- Testing -->
         <dependency>
