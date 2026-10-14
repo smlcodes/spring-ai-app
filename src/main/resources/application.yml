@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ai-patterns-handbook
+
+  ai:
+    # ---------- Ollama (local, default provider) ----------
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: llama3.2
+          temperature: 0.7
+      init:
+        pull-model-strategy: when_missing
+
+    # ---------- OpenAI (cloud) ----------
+    openai:
+      api-key: ${OPENAI_API_KEY:sk-demo-placeholder}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+
+    # ---------- Hugging Face (dedicated Inference Endpoint) ----------
+    huggingface:
+      chat:
+        api-key: ${HUGGINGFACE_API_KEY:hf_demo_placeholder}
+        url: ${HUGGINGFACE_ENDPOINT_URL:https://your-endpoint.endpoints.huggingface.cloud}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    org.springframework.ai: DEBUG
