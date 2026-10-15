@@ -23,7 +23,8 @@ spring:
       chroma:
         client:
           host: http://localhost
-          port: 8000
+          port: 8080
+        collection-name: ai-patterns-handbook   # default is SpringAiCollection
         initialize-schema: true   # create the collection on startup if missing
         # Spring AI's default tenant/database don't exist on the Chroma 1.x server and the client
         # fails to create them, so use the ones Chroma ships with.

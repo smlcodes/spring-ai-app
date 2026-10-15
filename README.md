@@ -28,4 +28,7 @@ docker compose ps
 curl -i http://localhost:8080/api/v2/heartbeat
 
 open http://localhost:8090
+
+
+curl -X POST localhost:8080/api/v2/tenants/default_tenant/databases/default_database/collections -H 'Content-Type: application/json' -d '{"name":"SpringAiCollection","get_or_create":true}'
 ```
