@@ -53,6 +53,12 @@
             <artifactId>spring-ai-starter-vector-store-chroma</artifactId>
         </dependency>
 
+        <!-- PDF ingestion for RAG uploads -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-pdf-document-reader</artifactId>
+        </dependency>
+
         <!-- QuestionAnswerAdvisor (RAG) -->
         <dependency>
             <groupId>org.springframework.ai</groupId>

@@ -5,9 +5,13 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +40,17 @@ public class RAGController {
         Document doc2 = new Document("VectorStore stores embeddings for search.", Map.of("source", "docs"));
         vectorStore.add(List.of(doc1, doc2));   // EmbeddingModel runs inside
         return "Saved!";
+    }
+
+    // 1b. UPLOAD: read a PDF, split it into chunks, embed and store in ChromaDB
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String upload(@RequestParam("file") MultipartFile file) {
+        List<Document> pages = new PagePdfDocumentReader(file.getResource()).get();
+        List<Document> chunks = new TokenTextSplitter().apply(pages);
+        chunks.forEach(c -> c.getMetadata().put("source", String.valueOf(file.getOriginalFilename())));
+        vectorStore.add(chunks);   // EmbeddingModel runs inside
+        log.info("Uploaded '{}': {} pages -> {} chunks", file.getOriginalFilename(), pages.size(), chunks.size());
+        return "Stored %d chunks from %s".formatted(chunks.size(), file.getOriginalFilename());
     }
 
     // 2. ASK: Retrieve + generate answer

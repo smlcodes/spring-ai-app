@@ -31,12 +31,12 @@ spring:
         tenant-name: default_tenant
         database-name: default_database
 
-    # ---------- Ollama (local, default provider) ----------
+    # ---------- Ollama (local, default provider) llama3.2:3b, qwen2.5:3b, gemma2:2b, ----------
     ollama:
       base-url: http://localhost:11434
       chat:
         options:
-          model: gemma2:2b
+          model: llama3.2:3b
           temperature: 0.7
       init:
         pull-model-strategy: when_missing

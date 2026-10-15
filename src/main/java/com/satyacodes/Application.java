@@ -24,7 +24,9 @@ public class Application {
         );
         log.info("********************************");
         log.info("http://localhost:8999/spring-ai-app");
-        log.info("http://localhost:8999/spring-ai-app/swagger-ui/index.html");
+        log.info("http://localhost:8999/spring-ai-app/swagger-ui/index.html\n \n");
+        log.info("ChromaDB \t: http://localhost:8080/api/v2/heartbeat\n" +
+                "ChromaDB UI\t: http://localhost:8090/");
         log.info("********************************\n \n ");
     }
 
