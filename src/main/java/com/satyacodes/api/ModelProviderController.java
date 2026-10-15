@@ -6,6 +6,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.huggingface.HuggingfaceChatModel;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -45,9 +46,11 @@ public class ModelProviderController {
         ChatModel model = models.get(provider.toLowerCase());
         log.info("asking for model: {}", model);
 
+        PromptTemplate promptTemplate = new PromptTemplate("What is {question} in 2-3 lines?");
+
         Prompt prompt = new Prompt(List.of(
                 new SystemMessage("Answer in one short sentence."),
-                new UserMessage(question)));
+                new UserMessage(promptTemplate.render(Map.of("question", question)))));
         log.info("prompt :{}", prompt.getContents());
 
 
